@@ -1,3 +1,43 @@
 ﻿  MindRiddle.cpp
-C:\Deni\source\repos\Mind\MindRiddle\MindRiddle\MindRiddle.cpp(386,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MindRiddle.vcxproj -> C:\Deni\source\repos\Mind\MindRiddle\x64\Debug\MindRiddle.exe
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(54,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(119,6): error C2084: function 'void clearScreen(void)' already has a body
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(8,6):
+      see previous definition of 'clearScreen'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(127,6): error C2084: function 'void printHangman(int)' already has a body
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(16,6):
+      see previous definition of 'printHangman'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(142,8): error C2084: function 'double generateExpression(std::string &)' already has a body
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(35,8):
+      see previous definition of 'generateExpression'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(198,21): error C2264: 'generateExpression': error in function definition or declaration; function not called
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(261,5): error C2084: function 'int main(void)' already has a body
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(53,5):
+      see previous definition of 'main'
+  
+C:\Program Files\Microsoft Visual Studio\18\Insiders\VC\Tools\MSVC\14.50.35717\include\__msvc_filebuf.hpp(27,1): error C2598: linkage specification must be at global scope
+  (compiling source file 'MindRiddle.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\18\Insiders\VC\Tools\MSVC\14.50.35717\include\__msvc_filebuf.hpp(27,1): error C2870: 'std': a namespace definition must appear either at file scope or immediately within another namespace definition
+  (compiling source file 'MindRiddle.cpp')
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(282,9): error C2374: 'MAX_WRONG': redefinition; multiple initialization
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(115,5):
+      see declaration of 'MAX_WRONG'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(282,9): error C2086: 'int MAX_WRONG': redefinition
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(115,5):
+      see declaration of 'MAX_WRONG'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(283,9): error C2374: 'DIFFICULTY': redefinition; multiple initialization
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(114,5):
+      see declaration of 'DIFFICULTY'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(283,9): error C2086: 'int DIFFICULTY': redefinition
+      C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(114,5):
+      see declaration of 'DIFFICULTY'
+  
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(355,25): error C2264: 'generateExpression': error in function definition or declaration; function not called
+C:\Users\pavli\source\repos\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(261,12): error C1075: '{': no matching token found
