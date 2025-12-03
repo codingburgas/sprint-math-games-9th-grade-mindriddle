@@ -1,0 +1,3 @@
+﻿  MindRiddle.cpp
+C:\Deni\source\repos\Mind\MindRiddle\MindRiddle\MindRiddle.cpp(386,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MindRiddle.vcxproj -> C:\Deni\source\repos\Mind\MindRiddle\x64\Debug\MindRiddle.exe

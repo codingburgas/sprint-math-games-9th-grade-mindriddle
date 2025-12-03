@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Gaming\\OneDrive - \u041F\u0413\u041A\u041F\u0418 - \u0411\u0443\u0440\u0433\u0430\u0441\\Documents\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\",
+  "WorkspaceRootPath": "C:\\Deni\\source\\repos\\Mind\\MindRiddle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|C:\\Users\\Gaming\\OneDrive - \u041F\u0413\u041A\u041F\u0418 - \u0411\u0443\u0440\u0433\u0430\u0441\\Documents\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|C:\\Deni\\source\\repos\\Mind\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|solutionrelative:MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -14,20 +14,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MindRiddle.cpp",
-              "DocumentMoniker": "C:\\Users\\Gaming\\OneDrive - \u041F\u0413\u041A\u041F\u0418 - \u0411\u0443\u0440\u0433\u0430\u0441\\Documents\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "DocumentMoniker": "C:\\Deni\\source\\repos\\Mind\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeDocumentMoniker": "MindRiddle\\MindRiddle.cpp",
-              "ToolTip": "C:\\Users\\Gaming\\OneDrive - \u041F\u0413\u041A\u041F\u0418 - \u0411\u0443\u0440\u0433\u0430\u0441\\Documents\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "ToolTip": "C:\\Deni\\source\\repos\\Mind\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeToolTip": "MindRiddle\\MindRiddle.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-02T19:13:58.859Z",
               "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             }
           ]
         }

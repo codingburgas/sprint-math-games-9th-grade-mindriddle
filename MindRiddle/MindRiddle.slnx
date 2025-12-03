@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="MindRiddle/MindRiddle.vcxproj" />
+  <Project Path="MindRiddle/MindRiddle.vcxproj" Id="830c3514-0324-43cb-83b0-4c03efddda13" />
 </Solution>
