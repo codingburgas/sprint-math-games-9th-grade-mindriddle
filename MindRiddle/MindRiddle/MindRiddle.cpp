@@ -12,7 +12,6 @@
 #include <algorithm>
 #include <cctype>
 
-#include <iostream>
 #if defined(_WIN32)
 #include <windows.h>
 #endif
@@ -30,6 +29,10 @@ string SETTINGS_FILE = "settings.txt";
 
 enum Language { ENGLISH, BULGARIAN };
 Language currentLang = ENGLISH;
+
+// ===== Добавени категории =====
+int MATH_CATEGORY = 2; // 1=Easy, 2=Medium, 3=Hard
+int WORD_CATEGORY = 4; // 1=Animals, 2=Foods, 3=Tech, 4=Random
 
 const string RESET = "\033[0m";
 const string RED = "\033[31m";
@@ -69,26 +72,60 @@ void printHangman(int wrong) {
     cout << "==========\n\n";
 }
 
+// ===== Math Hangman категории =====
+void chooseMathCategory() {
+    clearScreen();
+    cout << "=== MATH CATEGORIES ===\n";
+    cout << "1. Easy (+ -)\n";
+    cout << "2. Medium (+ - * /)\n";
+    cout << "3. Hard (+ - * / ^ sqrt)\n";
+    cout << "Choose: ";
+
+    int c;
+    cin >> c;
+    cin.ignore();
+    if (c >= 1 && c <= 3) MATH_CATEGORY = c;
+    else MATH_CATEGORY = 2;
+}
+
+// ===== Word Hangman категории =====
+void chooseWordCategory() {
+    clearScreen();
+    cout << "=== WORD CATEGORIES ===\n";
+    cout << "1. Animals\n";
+    cout << "2. Foods\n";
+    cout << "3. Technology\n";
+    cout << "4. Random\n";
+    cout << "Choose: ";
+
+    int c;
+    cin >> c;
+    cin.ignore();
+    if (c >= 1 && c <= 4) WORD_CATEGORY = c;
+    else WORD_CATEGORY = 4;
+}
+
+// ===== Math Hangman: генератор на изрази с категории =====
 double generateExpression(string& exprStr) {
     int a, b;
-    int diff = DIFFICULTY;
-    if (diff == 1) { a = rand() % 10 + 1; b = rand() % 10 + 1; }
-    else if (diff == 2) { a = rand() % 50 + 1; b = rand() % 50 + 1; }
+    if (DIFFICULTY == 1) { a = rand() % 10 + 1; b = rand() % 10 + 1; }
+    else if (DIFFICULTY == 2) { a = rand() % 50 + 1; b = rand() % 50 + 1; }
     else { a = rand() % 100 + 1; b = rand() % 100 + 1; }
-    int t = rand() % 6;
+
+    int t = 0;
+    if (MATH_CATEGORY == 1) t = rand() % 2;
+    else if (MATH_CATEGORY == 2) t = rand() % 4;
+    else t = rand() % 6;
+
     double result = 0.0;
     stringstream ss;
     if (t == 0) { result = a + b; ss << a << " + " << b; }
     else if (t == 1) { result = a - b; ss << a << " - " << b; }
     else if (t == 2) { result = a * b; ss << a << " * " << b; }
-    else if (t == 3) { if (b == 0) b = 1; a *= b; result = double(a) / b; ss << a << " / " << b; }
-    else if (t == 4) { int a = rand() % 20 + 1; int exponent = rand() % 5 + 1; result = pow(a, exponent); ss << a << " ^ " << exponent; }
-    else {
-        int root = rand() % 10 + 1;
-        int square = root * root;
-        result = root;
-        ss << "sqrt(" << square << ")";
-    }
+    else if (t == 3) { if (b == 0) b = 1; result = double(a) / b; ss << a << " / " << b; }
+    else if (t == 4) { int x = rand() % 10 + 1; int e = rand() % 4 + 1; result = pow(x, e); ss << x << " ^ " << e; }
+    else { int r = rand() % 10 + 1; int sq = r * r; result = r; ss << "sqrt(" << sq << ")"; }
+
     exprStr = ss.str();
     return result;
 }
@@ -175,9 +212,7 @@ void settingsMenu() {
             cout << "4. Назад\n";
             cout << "Избор: ";
         }
-        int ch;
-        cin >> ch;
-        cin.ignore();
+        int ch; cin >> ch; cin.ignore();
         if (ch == 1) { int x; cout << (currentLang == ENGLISH ? "Show expression? 1=Yes 0=No: " : "Показвай израза? 1=Да 0=Не: "); cin >> x; cin.ignore(); SHOW_EXPRESSION = (x == 1); }
         else if (ch == 2) { cout << (currentLang == ENGLISH ? "Enter seconds per turn: " : "Въведи секунди за ход: "); cin >> TIMER_PER_TURN; cin.ignore(); }
         else if (ch == 3) { if (currentLang == ENGLISH) currentLang = BULGARIAN; else currentLang = ENGLISH; }
@@ -186,25 +221,25 @@ void settingsMenu() {
     }
 }
 
+// ===== Math Hangman игра =====
 void playGame() {
+    chooseMathCategory(); // избира категория
     clearScreen();
-    int wrong = 0;
-    int totalScore = 0;
+    int wrong = 0, totalScore = 0;
     cout << BOLD << GREEN;
     if (currentLang == ENGLISH) cout << "=== MATHEMATICAL HANGMAN ===\n";
     else cout << "=== МАТЕМАТИЧЕСКИ БЕСИЛКА ===\n";
     cout << RESET;
+
     while (wrong < MAX_WRONG) {
-        string exprStr;
-        double answer = generateExpression(exprStr);
-        stringstream ss;
-        ss << fixed << setprecision(2) << answer;
-        string answerStr = ss.str();
+        string exprStr; double answer = generateExpression(exprStr);
+        stringstream ss; ss << fixed << setprecision(2) << answer; string answerStr = ss.str();
         string hidden(answerStr.size(), '_');
         if (SHOW_EXPRESSION) cout << (currentLang == ENGLISH ? "Expression: " : "Израз: ") << exprStr << "\n";
         else cout << (currentLang == ENGLISH ? "Expression is hidden!\n" : "Изразът е скрит!\n");
         bool answeredCorrectly = false;
         const double EPS = 1e-4;
+
         while (!answeredCorrectly && wrong < MAX_WRONG) {
             cout << (currentLang == ENGLISH ? "Remaining attempts: " : "Остават опити: ") << (MAX_WRONG - wrong) << "\n";
             printHangman(wrong);
@@ -214,8 +249,7 @@ void playGame() {
             input.erase(input.begin(), find_if(input.begin(), input.end(), [](unsigned char ch) { return !isspace(ch); }));
             input.erase(find_if(input.rbegin(), input.rend(), [](unsigned char ch) { return !isspace(ch); }).base(), input.end());
             if (input.empty()) { cout << RED << (currentLang == ENGLISH ? "Invalid input!\n" : "Невалиден вход!\n") << RESET; continue; }
-            bool parsedNumber = false;
-            double parsedValue = 0.0;
+            bool parsedNumber = false; double parsedValue = 0.0;
             try { size_t idx = 0; parsedValue = stod(input, &idx); if (idx == input.size()) parsedNumber = true; }
             catch (...) { parsedNumber = false; }
             if (parsedNumber && fabs(parsedValue - answer) < EPS) {
@@ -240,8 +274,7 @@ void playGame() {
     cout << (currentLang == ENGLISH ? "Your total score: " : "Вашият резултат: ") << totalScore << "\n";
     string name;
     do {
-        cout << (currentLang == ENGLISH ? "Enter your name for high scores: " : "Въведете името си за резултатите: ");
-        getline(cin, name);
+        cout << (currentLang == ENGLISH ? "Enter your name for high scores: " : "Въведете името си за резултатите: "); getline(cin, name);
         if (name.empty()) cout << RED << (currentLang == ENGLISH ? "Name cannot be empty!\n" : "Името не може да е празно!\n") << RESET;
     } while (name.empty());
     saveScore(name, totalScore);
@@ -249,24 +282,35 @@ void playGame() {
     cin.get();
 }
 
+// ===== Word Hangman игра =====
 void playWordHangman() {
+    chooseWordCategory(); // избира категория
     clearScreen();
-    vector<string> words = { "apple", "banana", "computer", "program", "hangman", "keyboard", "mouse", "window", "school", "game" };
+    vector<string> animals = { "dog","cat","lion","tiger","eagle","shark" };
+    vector<string> foods = { "apple","banana","pizza","bread","cheese" };
+    vector<string> tech = { "computer","keyboard","mouse","window","program" };
+    vector<string> random = { "school","game","music","planet","forest" };
+    vector<string> words;
+
+    if (WORD_CATEGORY == 1) words = animals;
+    else if (WORD_CATEGORY == 2) words = foods;
+    else if (WORD_CATEGORY == 3) words = tech;
+    else words = random;
+
     string word = words[rand() % words.size()];
     string hidden(word.size(), '_');
-    int wrong = 0;
-    bool win = false;
+    int wrong = 0; bool win = false;
     cout << BOLD << GREEN;
     if (currentLang == ENGLISH) cout << "=== WORD HANGMAN ===\n";
     else cout << "=== ДУМЕН HANGMAN ===\n";
     cout << RESET;
+
     while (wrong < MAX_WRONG && !win) {
         cout << "\n" << (currentLang == ENGLISH ? "Current: " : "Текущо: ") << hidden << "\n";
         cout << (currentLang == ENGLISH ? "Remaining wrong attempts: " : "Остават грешни опити: ") << (MAX_WRONG - wrong) << "\n";
         printHangman(wrong);
         cout << (currentLang == ENGLISH ? "Enter a letter: " : "Въведете буква: ");
-        string input;
-        getline(cin, input);
+        string input; getline(cin, input);
         if (input.size() != 1 || !isalpha(input[0])) { cout << RED << (currentLang == ENGLISH ? "Invalid input!\n" : "Невалиден вход!\n") << RESET; continue; }
         char c = tolower(input[0]);
         bool found = false;
@@ -274,6 +318,7 @@ void playWordHangman() {
         if (!found) { wrong++; cout << RED << (currentLang == ENGLISH ? "Wrong guess!\n" : "Грешна буква!\n") << RESET; }
         if (hidden == word) win = true;
     }
+
     int score = (win ? (word.size() * 10 + (MAX_WRONG - wrong) * 5) : 0);
     clearScreen();
     if (win) {
@@ -281,8 +326,7 @@ void playWordHangman() {
         cout << (currentLang == ENGLISH ? "Score: " : "Точки: ") << score << RESET;
         string name;
         do {
-            cout << "\n" << (currentLang == ENGLISH ? "Enter your name: " : "Въведете името си: ");
-            getline(cin, name);
+            cout << "\n" << (currentLang == ENGLISH ? "Enter your name: " : "Въведете името си: "); getline(cin, name);
             if (name.empty()) cout << RED << (currentLang == ENGLISH ? "Name cannot be empty!\n" : "Името не може да е празно!\n") << RESET;
         } while (name.empty());
         saveScore(name, score);
@@ -295,12 +339,12 @@ void playWordHangman() {
     cin.get();
 }
 
+// ===== MAIN MENU =====
 int main() {
-    #if defined(_WIN32)
-    #include <windows.h>
-        SetConsoleOutputCP(CP_UTF8);
-        SetConsoleCP(CP_UTF8);
-    #endif
+#if defined(_WIN32)
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+#endif
     srand(time(0));
     while (true) {
         clearScreen();
@@ -313,14 +357,7 @@ int main() {
             cout << "1. Математически Hangman\n2. Думен Hangman\n3. Резултати\n4. Настройки\n5. Правила\n6. Изход\nИзбор: ";
         }
         int choice;
-        if (!(cin >> choice)) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << (currentLang == ENGLISH ?
-                "Invalid input! Please enter a number.\n" : "Невалиден избор! Въведете число.\n");
-            cin.ignore();
-            continue;
-        }
+        if (!(cin >> choice)) { cin.clear(); cin.ignore(1000, '\n'); cout << (currentLang == ENGLISH ? "Invalid input! Please enter a number.\n" : "Невалиден избор! Въведете число.\n"); cin.ignore(); continue; }
         cin.ignore(1000, '\n');
         switch (choice) {
         case 1: playGame(); break;
@@ -328,11 +365,8 @@ int main() {
         case 3: showHighScores(); break;
         case 4: settingsMenu(); break;
         case 5: showRules(); break;
-        case 6:
-            cout << (currentLang == ENGLISH ? "Exiting... Goodbye!\n" : "Изход... Довиждане!\n");
-            return 0;
-        default:
-            cout << (currentLang == ENGLISH ? "Invalid option! Try again.\n" : "Невалидна опция! Опитайте отново.\n");
+        case 6: cout << (currentLang == ENGLISH ? "Exiting... Goodbye!\n" : "Изход... Довиждане!\n"); return 0;
+        default: cout << (currentLang == ENGLISH ? "Invalid option! Try again.\n" : "Невалидна опция! Опитайте отново.\n");
         }
     }
 }
