@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
@@ -11,6 +11,11 @@
 #include <thread>
 #include <algorithm>
 #include <cctype>
+
+#include <iostream>
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 
 using namespace std;
 
@@ -169,7 +174,7 @@ void settingsMenu() {
             cout << "1. Трудност (сегашна " << DIFFICULTY << ")\n";
             cout << "2. Показвай израза (сегашно " << SHOW_EXPRESSION << ")\n";
             cout << "3. Таймер за ход (сегашни " << TIMER_PER_TURN << "с)\n";
-            cout << "4.Тема(сегашна " << THEME << ")\n";
+            cout << "4. Тема(сегашна " << THEME << ")\n";
             cout << "5. Език (сегашен " << (currentLang == ENGLISH ? "ENGLISH" : "BULGARIAN") << ")\n";
             cout << "6. Назад\n";
             cout << "Избор: ";
@@ -291,6 +296,11 @@ void playWordHangman() {
 }
 
 int main() {
+    #if defined(_WIN32)
+    #include <windows.h>
+        SetConsoleOutputCP(CP_UTF8);
+        SetConsoleCP(CP_UTF8);
+    #endif
     srand(time(0));
     while (true) {
         clearScreen();
@@ -325,5 +335,4 @@ int main() {
             cout << (currentLang == ENGLISH ? "Invalid option! Try again.\n" : "Невалидна опция! Опитайте отново.\n");
         }
     }
-    return 0;
 }

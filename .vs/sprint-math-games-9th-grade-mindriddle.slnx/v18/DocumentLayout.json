@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\sprint-math-games-9th-grade-mindriddle\\",
+  "WorkspaceRootPath": "C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MindRiddle\\MindRiddle\\MindRiddle.vcxproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
@@ -28,9 +28,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MindRiddle.vcxproj",
-              "DocumentMoniker": "E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
+              "DocumentMoniker": "C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
               "RelativeDocumentMoniker": "MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
-              "ToolTip": "E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
+              "ToolTip": "C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
               "RelativeToolTip": "MindRiddle\\MindRiddle\\MindRiddle.vcxproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000698|",
@@ -41,11 +41,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MindRiddle.cpp",
-              "DocumentMoniker": "E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "DocumentMoniker": "C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeDocumentMoniker": "MindRiddle\\MindRiddle\\MindRiddle.cpp",
-              "ToolTip": "E:\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "ToolTip": "C:\\Users\\poka\\Downloads\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeToolTip": "MindRiddle\\MindRiddle\\MindRiddle.cpp",
-              "ViewState": "AgIAAB0BAAAAAAAAAAAAADYBAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAAALMAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-05T15:54:26.592Z",
               "EditorCaption": ""
