@@ -238,9 +238,12 @@ void playGame() {
     clearScreen();
     cout << RED << (currentLang == ENGLISH ? "=== GAME OVER ===\n" : "=== ИГРАТА СВЪРШИ ===\n") << RESET;
     cout << (currentLang == ENGLISH ? "Your total score: " : "Вашият резултат: ") << totalScore << "\n";
-    cout << (currentLang == ENGLISH ? "Enter your name for high scores: " : "Въведете името си за резултатите: ");
     string name;
-    getline(cin, name);
+    do {
+        cout << (currentLang == ENGLISH ? "Enter your name for high scores: " : "Въведете името си за резултатите: ");
+        getline(cin, name);
+        if (name.empty()) cout << RED << (currentLang == ENGLISH ? "Name cannot be empty!\n" : "Името не може да е празно!\n") << RESET;
+    } while (name.empty());
     saveScore(name, totalScore);
     cout << (currentLang == ENGLISH ? "Press Enter..." : "Натиснете Enter...");
     cin.get();
@@ -276,9 +279,12 @@ void playWordHangman() {
     if (win) {
         cout << GREEN << (currentLang == ENGLISH ? "=== YOU WIN! ===\nWord: " : "=== ПОБЕДА! ===\nДума: ") << word << "\n";
         cout << (currentLang == ENGLISH ? "Score: " : "Точки: ") << score << RESET;
-        cout << "\n" << (currentLang == ENGLISH ? "Enter your name: " : "Въведете името си: ");
         string name;
-        getline(cin, name);
+        do {
+            cout << "\n" << (currentLang == ENGLISH ? "Enter your name: " : "Въведете името си: ");
+            getline(cin, name);
+            if (name.empty()) cout << RED << (currentLang == ENGLISH ? "Name cannot be empty!\n" : "Името не може да е празно!\n") << RESET;
+        } while (name.empty());
         saveScore(name, score);
     }
     else {
