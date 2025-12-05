@@ -162,32 +162,26 @@ void settingsMenu() {
         if (currentLang == ENGLISH) cout << "====== SETTINGS ======\n";
         else cout << "====== НАСТРОЙКИ ======\n";
         if (currentLang == ENGLISH) {
-            cout << "1. Difficulty (current " << DIFFICULTY << ")\n";
-            cout << "2. Show expression (current " << SHOW_EXPRESSION << ")\n";
-            cout << "3. Timer per turn (current " << TIMER_PER_TURN << "s)\n";
-            cout << "4. Theme (current " << THEME << ")\n";
-            cout << "5. Language (current " << (currentLang == ENGLISH ? "ENGLISH" : "BULGARIAN") << ")\n";
-            cout << "6. Back\n";
+            cout << "1. Show expression (current " << SHOW_EXPRESSION << ")\n";
+            cout << "2. Timer per turn (current " << TIMER_PER_TURN << "s)\n";
+            cout << "3. Language (current " << (currentLang == ENGLISH ? "ENGLISH" : "BULGARIAN") << ")\n";
+            cout << "4. Back\n";
             cout << "Choice: ";
         }
         else {
-            cout << "1. Трудност (сегашна " << DIFFICULTY << ")\n";
-            cout << "2. Показвай израза (сегашно " << SHOW_EXPRESSION << ")\n";
-            cout << "3. Таймер за ход (сегашни " << TIMER_PER_TURN << "с)\n";
-            cout << "4. Тема(сегашна " << THEME << ")\n";
-            cout << "5. Език (сегашен " << (currentLang == ENGLISH ? "ENGLISH" : "BULGARIAN") << ")\n";
-            cout << "6. Назад\n";
+            cout << "1. Показвай израза (сегашно " << SHOW_EXPRESSION << ")\n";
+            cout << "2. Таймер за ход (сегашни " << TIMER_PER_TURN << "с)\n";
+            cout << "3. Език (сегашен " << (currentLang == ENGLISH ? "ENGLISH" : "BULGARIAN") << ")\n";
+            cout << "4. Назад\n";
             cout << "Избор: ";
         }
         int ch;
         cin >> ch;
         cin.ignore();
-        if (ch == 1) { cout << (currentLang == ENGLISH ? "1=Easy 2=Medium 3=Hard: " : "1=Лесно 2=Средно 3=Трудно: "); cin >> DIFFICULTY; cin.ignore(); }
-        else if (ch == 2) { int x; cout << (currentLang == ENGLISH ? "Show expression? 1=Yes 0=No: " : "Показвай израза? 1=Да 0=Не: "); cin >> x; cin.ignore(); SHOW_EXPRESSION = (x == 1); }
-        else if (ch == 3) { cout << (currentLang == ENGLISH ? "Enter seconds per turn: " : "Въведи секунди за ход: "); cin >> TIMER_PER_TURN; cin.ignore(); }
-        else if (ch == 4) { cout << (currentLang == ENGLISH ? "Theme LIGHT/DARK: " : "Тема LIGHT/DARK: "); getline(cin, THEME); }
-        else if (ch == 5) { if (currentLang == ENGLISH) currentLang = BULGARIAN; else currentLang = ENGLISH; }
-        else if (ch == 6) break;
+        if (ch == 1) { int x; cout << (currentLang == ENGLISH ? "Show expression? 1=Yes 0=No: " : "Показвай израза? 1=Да 0=Не: "); cin >> x; cin.ignore(); SHOW_EXPRESSION = (x == 1); }
+        else if (ch == 2) { cout << (currentLang == ENGLISH ? "Enter seconds per turn: " : "Въведи секунди за ход: "); cin >> TIMER_PER_TURN; cin.ignore(); }
+        else if (ch == 3) { if (currentLang == ENGLISH) currentLang = BULGARIAN; else currentLang = ENGLISH; }
+        else if (ch == 4) break;
         else { cout << (currentLang == ENGLISH ? "Invalid option!" : "Невалидна опция!"); cin.get(); }
     }
 }
