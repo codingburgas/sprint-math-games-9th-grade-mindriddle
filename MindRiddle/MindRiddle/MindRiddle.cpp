@@ -77,8 +77,13 @@ double generateExpression(string& exprStr) {
     else if (t == 1) { result = a - b; ss << a << " - " << b; }
     else if (t == 2) { result = a * b; ss << a << " * " << b; }
     else if (t == 3) { if (b == 0) b = 1; a *= b; result = double(a) / b; ss << a << " / " << b; }
-    else if (t == 4) { int exponent = b % 6; result = pow(a, exponent); ss << a << " ^ " << exponent; }
-    else { a = rand() % 100 + 1; result = sqrt(a); ss << "sqrt(" << a << ")"; }
+    else if (t == 4) { int a = rand() % 20 + 1; int exponent = rand() % 5 + 1; result = pow(a, exponent); ss << a << " ^ " << exponent; }
+    else {
+        int root = rand() % 10 + 1;
+        int square = root * root;
+        result = root;
+        ss << "sqrt(" << square << ")";
+    }
     exprStr = ss.str();
     return result;
 }
@@ -202,7 +207,6 @@ void playGame() {
         bool answeredCorrectly = false;
         const double EPS = 1e-4;
         while (!answeredCorrectly && wrong < MAX_WRONG) {
-            cout << "\n" << (currentLang == ENGLISH ? "Current: " : "Текущо: ") << hidden << "\n";
             cout << (currentLang == ENGLISH ? "Remaining attempts: " : "Остават опити: ") << (MAX_WRONG - wrong) << "\n";
             printHangman(wrong);
             string input;
@@ -218,7 +222,6 @@ void playGame() {
             if (parsedNumber && fabs(parsedValue - answer) < EPS) {
                 hidden = answerStr;
                 totalScore += calculateScore(true, wrong, MAX_WRONG, DIFFICULTY, 0);
-                wrong++;
                 answeredCorrectly = true;
                 cout << GREEN << (currentLang == ENGLISH ? "Correct! New question coming...\n" : "Правилно! Нова задача идва...\n") << RESET;
                 sleepSeconds(1);
@@ -301,8 +304,12 @@ int main() {
         }
         int choice;
         if (!(cin >> choice)) {
-            cin.clear(); cin.ignore(1000, '\n'); cout << (currentLang == ENGLISH ?
-                "Invalid input! Please enter a number.\n" : "Невалиден избор! Въведете число.\n"); cin.get(); continue;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << (currentLang == ENGLISH ?
+                "Invalid input! Please enter a number.\n" : "Невалиден избор! Въведете число.\n");
+            cin.ignore();
+            continue;
         }
         cin.ignore(1000, '\n');
         switch (choice) {
@@ -317,12 +324,6 @@ int main() {
         default:
             cout << (currentLang == ENGLISH ? "Invalid option! Try again.\n" : "Невалидна опция! Опитайте отново.\n");
         }
-        cout << "\n" << (currentLang == ENGLISH ? "Press ENTER to return to the menu..." : "Натиснете ENTER, за да се върнете в менюто...");
-        cin.get();
     }
     return 0;
 }
-
-
-
-
