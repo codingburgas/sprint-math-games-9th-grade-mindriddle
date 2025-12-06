@@ -1,9 +1,9 @@
 ﻿  MindRiddle.cpp
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(217,19): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(217,19): warning C4244:         with
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(217,19): warning C4244:         [
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(217,19): warning C4244:             _Rep=__int64
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(217,19): warning C4244:         ]
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(389,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(427,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MindRiddle.vcxproj -> C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\x64\Debug\MindRiddle.exe
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(738,19): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(738,19): warning C4244:         with
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(738,19): warning C4244:         [
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(738,19): warning C4244:             _Rep=__int64
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(738,19): warning C4244:         ]
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(931,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(1026,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(1040,17): error C3861: 'settingsMenu': identifier not found
