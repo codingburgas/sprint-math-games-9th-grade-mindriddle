@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\pavli\\Kristiyana\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\",
+  "WorkspaceRootPath": "C:\\Users\\Deni\\Desktop\\Mind Riddle\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|C:\\Users\\pavli\\Kristiyana\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|C:\\Users\\Deni\\Desktop\\Mind Riddle\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{830C3514-0324-43CB-83B0-4C03EFDDDA13}|MindRiddle\\MindRiddle.vcxproj|solutionrelative:MindRiddle\\MindRiddle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -24,11 +24,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MindRiddle.cpp",
-              "DocumentMoniker": "C:\\Users\\pavli\\Kristiyana\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "DocumentMoniker": "C:\\Users\\Deni\\Desktop\\Mind Riddle\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeDocumentMoniker": "MindRiddle\\MindRiddle.cpp",
-              "ToolTip": "C:\\Users\\pavli\\Kristiyana\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp*",
-              "RelativeToolTip": "MindRiddle\\MindRiddle.cpp*",
-              "ViewState": "AgIAAGkBAAAAAAAAAAAQwHQBAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Deni\\Desktop\\Mind Riddle\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
+              "RelativeToolTip": "MindRiddle\\MindRiddle.cpp",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAABYAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-02T19:13:58.859Z",
               "EditorCaption": ""
