@@ -25,7 +25,7 @@ int DIFFICULTY = 2;
 string HIGHSCORE_MATH = "scores_math.txt";
 string HIGHSCORE_WORD = "scores_word.txt";
 
-enum Language { ENGLISH };
+enum Language { ENGLISH, BULGARIAN };
 Language currentLang = ENGLISH;
 
 int MATH_CATEGORY = 2;
@@ -39,8 +39,6 @@ const string YELLOW = "\033[33m";
 const string BOLD = "\033[1m";
 
 // ==================== UTILITIES ====================
-
-// Clears the console screen
 void clearScreen() {
 #if defined(_WIN32)
     system("cls");
@@ -49,28 +47,79 @@ void clearScreen() {
 #endif
 }
 
-// Pauses execution for a given number of seconds
 void sleepSeconds(int sec) {
     this_thread::sleep_for(chrono::seconds(sec));
 }
 
-// Prints the hangman figure based on the number of wrong guesses
 void printHangman(int wrong) {
-    string stages[7] = {
-        " +----+\n |    |\n |    \n |    \n |    \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n |    \n |    \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n | |  \n |    \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n | /| \n |    \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n | /|\\\n |    \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n | /|\\\n | /  \n |    \n==========\n",
-        " +----+\n |    |\n | O  \n | /|\\\n | / \\\n |    \n==========\n"
+    string hangmanPic[7] = {
+        " +----+\n"
+        " |    |\n"
+        " |    \n"
+        " |    \n"
+        " |    \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |    \n"
+        " |    \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |    |\n"
+        " |    \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |   /|\n"
+        " |    \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |   /|\\\n"
+        " |    \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |   /|\\\n"
+        " |   / \n"
+        " |    \n"
+        "==========\n",
+
+        " +----+\n"
+        " |    |\n"
+        " |    O\n"
+        " |   /|\\\n"
+        " |   / \\\n"
+        " |    \n"
+        "==========\n"
     };
-    cout << stages[min(wrong, MAX_WRONG)] << "\n";
+
+    int idx = wrong;
+    if (idx < 0) idx = 0;
+    if (idx > 6) idx = 6;
+    cout << hangmanPic[idx] << "\n";  
 }
 
-// ==================== GAME LOGIC ====================
 
-// Generates a math expression based on difficulty and category
+
+
+// ==================== GAME LOGIC ====================
 double generateExpression(string& exprStr) {
     int a, b;
 
@@ -140,7 +189,6 @@ double generateExpression(string& exprStr) {
     return result;
 }
 
-// Reads the best score from a file
 int getBestScore(const string& filename) {
     ifstream f(filename);
     int best = 0, s;
@@ -151,7 +199,6 @@ int getBestScore(const string& filename) {
     return best;
 }
 
-// Saves score to file if it's the best score
 void saveScoreIfBest(const string& filename, const string& name, int score) {
     int best = getBestScore(filename);
     if (score > best) {
@@ -160,7 +207,6 @@ void saveScoreIfBest(const string& filename, const string& name, int score) {
     }
 }
 
-// Calculates the score for a round
 int calculateScore(bool win, int wrong, int difficulty) {
     if (!win) return 0;
     int base = 50;
@@ -170,8 +216,6 @@ int calculateScore(bool win, int wrong, int difficulty) {
 }
 
 // ==================== CATEGORY SELECTION ====================
-
-// Lets the player choose a math category
 void chooseMathCategory() {
     clearScreen();
     cout << "=== MATH CATEGORIES ===\n";
@@ -181,7 +225,11 @@ void chooseMathCategory() {
     cout << "Choose: ";
 
     int c;
-    cin >> c;
+    if (!(cin >> c)) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        c = 2;
+    }
     cin.ignore();
 
     if (c >= 1 && c <= 3) {
@@ -192,7 +240,6 @@ void chooseMathCategory() {
     }
 }
 
-// Lets the player choose a word category
 void chooseWordCategory() {
     clearScreen();
     cout << "=== WORD CATEGORIES ===\n";
@@ -203,7 +250,11 @@ void chooseWordCategory() {
     cout << "Choose: ";
 
     int c;
-    cin >> c;
+    if (!(cin >> c)) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        c = 4;
+    }
     cin.ignore();
 
     if (c >= 1 && c <= 4) {
@@ -214,9 +265,11 @@ void chooseWordCategory() {
     }
 }
 
-// ==================== MATH HANGMAN ====================
+// Forward declarations
+void showHighScores();
+void showRules();
 
-// Plays a math hangman round
+// ==================== MATH HANGMAN ====================
 void playMathHangman() {
     chooseMathCategory();
     clearScreen();
@@ -308,16 +361,26 @@ void playMathHangman() {
 }
 
 // ==================== WORD HANGMAN ====================
-
-// Plays a word hangman round
 void playWordHangman() {
     chooseWordCategory();
     clearScreen();
 
-    vector<string> animals = { "dog", "cat", "lion", "tiger", "eagle", "shark" };
-    vector<string> foods = { "apple", "banana", "pizza", "bread", "cheese" };
-    vector<string> tech = { "computer", "keyboard", "mouse", "window", "program" };
-    vector<string> random = { "school", "game", "music", "planet", "forest" };
+    vector<string> animals = { "dog","cat","lion","tiger","eagle","shark","bear","wolf","fox","giraffe",
+    "zebra","kangaroo","panda","monkey","rabbit","owl","horse","cow","sheep",
+    "dolphin","whale","penguin","alligator","crocodile","snake","frog","elephant",
+    "hippopotamus","raccoon","squirrel","otter","lobster","crab","turtle","parrot" };
+    vector<string> foods = { "apple","banana","pizza","bread","cheese","tomato","carrot","onion","potato",
+    "chicken","beef","pork","salad","sandwich","rice","pasta","soup","milk",
+    "yogurt","butter","cake","cookie","chocolate","grape","strawberry","orange",
+    "lemon","cucumber","pepper","spinach","broccoli","mushroom","pancake","waffle" };
+    vector<string> tech = { "computer","keyboard","mouse","window","program","internet","server","laptop",
+    "tablet","smartphone","printer","monitor","router","software","hardware",
+    "database","algorithm","application","network","password","firewall","email",
+    "browser","keyboard","chip","sensor","robot","drone","usb","bluetooth","scanner" };
+    vector<string> random = { "school","game","music","planet","forest","river","mountain","city","village",
+    "book","movie","friend","family","garden","car","bicycle","train","airport",
+    "holiday","beach","storm","flower","bridge","lamp","painting","museum","computer",
+    "chair","table","clock","puzzle","camera","key","window" };
     vector<string> words;
 
     if (WORD_CATEGORY == 1) words = animals;
@@ -408,6 +471,74 @@ void playWordHangman() {
     cin.get();
 }
 
+// ==================== HIGH SCORES ====================
+struct ScoreEntry { string name; int score; };
+
+bool sortScoresDesc(const ScoreEntry& a, const ScoreEntry& b) { return a.score > b.score; }
+
+void showHighScores() {
+    clearScreen();
+
+    if (currentLang == ENGLISH) cout << "======== HIGH SCORES ========\n\n";
+    else cout << "======== РЕЗУЛТАТИ ========\n\n";
+
+    ifstream fw(HIGHSCORE_WORD);
+    vector<ScoreEntry> wordScores;
+    string n; int s;
+    while (fw >> n >> s) wordScores.push_back({ n, s });
+    fw.close();
+
+    if (!wordScores.empty()) {
+        sort(wordScores.begin(), wordScores.end(), sortScoresDesc);
+
+        if (currentLang == ENGLISH) cout << "--- WORD HANGMAN ---\n";
+        else cout << "--- WORD HANGMAN ---\n";
+
+        for (auto& e : wordScores) cout << e.name << " " << e.score << "\n";
+    }
+
+    ifstream fm(HIGHSCORE_MATH);
+    vector<ScoreEntry> mathScores;
+    while (fm >> n >> s) mathScores.push_back({ n, s });
+    fm.close();
+
+    if (!mathScores.empty()) {
+        sort(mathScores.begin(), mathScores.end(), sortScoresDesc);
+
+        if (currentLang == ENGLISH) cout << "\n--- MATH HANGMAN ---\n";
+        else cout << "\n--- MATH HANGMAN ---\n";
+
+        for (auto& e : mathScores) cout << e.name << " " << e.score << "\n";
+    }
+
+    if (currentLang == ENGLISH) cout << "\nPress Enter...";
+    else cout << "\nНатиснете Enter...";
+
+    cin.get();
+}
+
+// ==================== RULES ====================
+void showRules() {
+    clearScreen();
+
+    if (currentLang == ENGLISH) {
+        cout << "=========== RULES ===========\n\n";
+        cout << "Math Hangman: Solve the math expression before time runs out.\n";
+        cout << "Word Hangman: Guess letters to reveal the word.\n";
+        cout << "Max wrong attempts: " << MAX_WRONG << "\n";
+        cout << "Press Enter to return...";
+    }
+    else {
+        cout << "=========== ПРАВИЛА ===========\n\n";
+        cout << "Math Hangman: Решете израза преди да изтече времето.\n";
+        cout << "Word Hangman: Познайте буквите, за да разкриете думата.\n";
+        cout << "Макс. грешни опити: " << MAX_WRONG << "\n";
+        cout << "Натиснете Enter за връщане...";
+    }
+
+    cin.get();
+}
+
 // ==================== MAIN ====================
 int main() {
 #if defined(_WIN32)
@@ -415,7 +546,11 @@ int main() {
     SetConsoleCP(CP_UTF8);
 #endif
 
-    srand(time(0));
+    srand((unsigned)time(nullptr));
+
+    if (currentLang == ENGLISH) cout << "\nPress Enter...";
+    else cout << "\nНатиснете Enter...";
+    cin.get();
 
     while (true) {
         clearScreen();
@@ -445,20 +580,41 @@ int main() {
             playWordHangman();
             break;
         case 3:
-            // showHighScores();
+            showHighScores();
             break;
         case 4:
-            // settingsMenu();
+ 
+            clearScreen();
+            cout << "=== SETTINGS ===\n";
+            cout << "1. Toggle show expression (currently " << (SHOW_EXPRESSION ? "ON" : "OFF") << ")\n";
+ 
+            cout << "2. Back\n";
+            cout << "Choice: ";
+            {
+                int sc;
+                if (!(cin >> sc)) {
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                    break;
+                }
+                cin.ignore(1000, '\n');
+                if (sc == 1) SHOW_EXPRESSION = !SHOW_EXPRESSION;
+             
+            }
             break;
         case 5:
-            // showRules();
+            showRules();
             break;
         case 6:
             cout << "Exiting... Goodbye!\n";
             return 0;
         default:
             cout << "Invalid option! Try again.\n";
+            sleepSeconds(1);
             break;
         }
     }
+
+    return 0;
 }
+

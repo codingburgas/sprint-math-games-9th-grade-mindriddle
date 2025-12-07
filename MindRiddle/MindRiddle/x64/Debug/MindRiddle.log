@@ -1,4 +1,1 @@
-﻿  MindRiddle.cpp
-C:\Users\pavli\Kristiyana\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(382,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\pavli\Kristiyana\sprint-math-games-9th-grade-mindriddle\MindRiddle\MindRiddle\MindRiddle.cpp(418,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MindRiddle.vcxproj -> C:\Users\pavli\Kristiyana\sprint-math-games-9th-grade-mindriddle\MindRiddle\x64\Debug\MindRiddle.exe
+﻿LINK : fatal error LNK1168: cannot open C:\Users\Deni\Desktop\Mind Riddle\sprint-math-games-9th-grade-mindriddle\MindRiddle\x64\Debug\MindRiddle.exe for writing
