@@ -14,15 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
             },
             {
               "$type": "Document",
@@ -32,7 +28,7 @@
               "RelativeDocumentMoniker": "MindRiddle\\MindRiddle.cpp",
               "ToolTip": "C:\\Users\\Deni\\Desktop\\Mind Riddle\\sprint-math-games-9th-grade-mindriddle\\MindRiddle\\MindRiddle\\MindRiddle.cpp",
               "RelativeToolTip": "MindRiddle\\MindRiddle.cpp",
-              "ViewState": "AgIAAGMCAAAAAAAAAAAkwGQCAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAACACAAAAAAAAAAAQwJ8CAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-02T19:13:58.859Z",
               "EditorCaption": ""

@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cctype>
 
+
 #if defined(_WIN32)
 #include <windows.h>
 #endif
@@ -24,9 +25,6 @@ int MAX_WRONG = 6;
 int DIFFICULTY = 2;
 string HIGHSCORE_MATH = "scores_math.txt";
 string HIGHSCORE_WORD = "scores_word.txt";
-
-enum Language { ENGLISH, BULGARIAN };
-Language currentLang = ENGLISH;
 
 int MATH_CATEGORY = 2;
 int WORD_CATEGORY = 4;
@@ -46,7 +44,7 @@ void clearScreen() {
     cout << "\033[2J\033[H";
 #endif
 }
-
+int TIME_LIMIT = 20;
 void sleepSeconds(int sec) {
     this_thread::sleep_for(chrono::seconds(sec));
 }
@@ -113,7 +111,7 @@ void printHangman(int wrong) {
     int idx = wrong;
     if (idx < 0) idx = 0;
     if (idx > 6) idx = 6;
-    cout << hangmanPic[idx] << "\n";  
+    cout << hangmanPic[idx] << "\n";
 }
 
 
@@ -265,11 +263,9 @@ void chooseWordCategory() {
     }
 }
 
-// Forward declarations
 void showHighScores();
 void showRules();
 
-// ==================== MATH HANGMAN ====================
 void playMathHangman() {
     chooseMathCategory();
     clearScreen();
@@ -295,9 +291,22 @@ void playMathHangman() {
             cout << "Remaining attempts: " << (MAX_WRONG - wrong) << "\n";
             printHangman(wrong);
 
-            cout << "Enter answer (or 'q' to quit): ";
+            cout << "Enter answer (or 'quit' to quit): ";
+
+            auto start = chrono::steady_clock::now();
             string input;
             getline(cin, input);
+            auto end = chrono::steady_clock::now();
+            int elapsed = chrono::duration_cast<chrono::seconds>(end - start).count();
+
+            if (elapsed > TIME_LIMIT) {
+                cout << RED << "Time's up!\n" << RESET;
+                wrong++;
+                sleepSeconds(1);
+                clearScreen();
+                break;
+            }
+
             input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 
             if (input.empty()) {
@@ -305,7 +314,7 @@ void playMathHangman() {
                 continue;
             }
 
-            if (input == "q" || input == "Q") return;
+            if (input == "quit" || input == "QUIT" || input == "Quit") return;
 
             bool parsed = false;
             double value = 0.0;
@@ -360,6 +369,7 @@ void playMathHangman() {
     cin.get();
 }
 
+
 // ==================== WORD HANGMAN ====================
 void playWordHangman() {
     chooseWordCategory();
@@ -404,7 +414,7 @@ void playWordHangman() {
 
         printHangman(wrong);
 
-        cout << "Enter a letter (or 'q' to quit): ";
+        cout << "Enter a letter (or 'quit' to quit): ";
         string in;
         getline(cin, in);
 
@@ -413,9 +423,11 @@ void playWordHangman() {
             continue;
         }
 
+        if (in == "quit" || in == "QUIT" || in == "Quit") return;
+
         char c = tolower(in[0]);
 
-        if (c == 'q') return;
+
 
         if (!isalpha(c) || in.size() != 1) {
             cout << RED << "Invalid input!\n" << RESET;
@@ -479,8 +491,7 @@ bool sortScoresDesc(const ScoreEntry& a, const ScoreEntry& b) { return a.score >
 void showHighScores() {
     clearScreen();
 
-    if (currentLang == ENGLISH) cout << "======== HIGH SCORES ========\n\n";
-    else cout << "======== РЕЗУЛТАТИ ========\n\n";
+    cout << "======== HIGH SCORES ========\n\n";
 
     ifstream fw(HIGHSCORE_WORD);
     vector<ScoreEntry> wordScores;
@@ -491,8 +502,7 @@ void showHighScores() {
     if (!wordScores.empty()) {
         sort(wordScores.begin(), wordScores.end(), sortScoresDesc);
 
-        if (currentLang == ENGLISH) cout << "--- WORD HANGMAN ---\n";
-        else cout << "--- WORD HANGMAN ---\n";
+        cout << "--- WORD HANGMAN ---\n";
 
         for (auto& e : wordScores) cout << e.name << " " << e.score << "\n";
     }
@@ -505,38 +515,50 @@ void showHighScores() {
     if (!mathScores.empty()) {
         sort(mathScores.begin(), mathScores.end(), sortScoresDesc);
 
-        if (currentLang == ENGLISH) cout << "\n--- MATH HANGMAN ---\n";
-        else cout << "\n--- MATH HANGMAN ---\n";
+        cout << "\n--- MATH HANGMAN ---\n";
+
 
         for (auto& e : mathScores) cout << e.name << " " << e.score << "\n";
     }
 
-    if (currentLang == ENGLISH) cout << "\nPress Enter...";
-    else cout << "\nНатиснете Enter...";
+    cout << "\nPress Enter...";
+
 
     cin.get();
 }
 
 // ==================== RULES ====================
+void waitForEnter() {
+    string dummy;
+    getline(cin, dummy);
+}
+
 void showRules() {
     clearScreen();
 
-    if (currentLang == ENGLISH) {
-        cout << "=========== RULES ===========\n\n";
-        cout << "Math Hangman: Solve the math expression before time runs out.\n";
-        cout << "Word Hangman: Guess letters to reveal the word.\n";
-        cout << "Max wrong attempts: " << MAX_WRONG << "\n";
-        cout << "Press Enter to return...";
-    }
-    else {
-        cout << "=========== ПРАВИЛА ===========\n\n";
-        cout << "Math Hangman: Решете израза преди да изтече времето.\n";
-        cout << "Word Hangman: Познайте буквите, за да разкриете думата.\n";
-        cout << "Макс. грешни опити: " << MAX_WRONG << "\n";
-        cout << "Натиснете Enter за връщане...";
-    }
+    cout << "=========== RULES ===========\n\n";
+    cout << "Welcome to Mind Riddle - Hangman!\n";
+    cout << "There are two game modes: Math Hangman and Word Hangman.\n\n";
 
-    cin.get();
+    cout << "MATH HANGMAN\n";
+    cout << "Solve the displayed math expression before you run out of attempts.\n";
+    cout << "Each wrong answer draws another part of the hangman.\n";
+    cout << "Harder difficulties give harder expressions and more points.\n\n";
+
+    cout << "WORD HANGMAN\n";
+    cout << "Guess the hidden word by entering letters.\n";
+    cout << "Each wrong letter adds to the hangman drawing.\n";
+    cout << "Repeated guesses do not cost attempts.\n\n";
+
+    cout << "GENERAL RULES\n";
+    cout << "You have a limited number of wrong attempts: " << MAX_WRONG << "\n";
+    cout << "If the hangman drawing is completed, the game is over.\n";
+    cout << "Correct answers and fewer mistakes earn more points.\n";
+    cout << "High scores are saved only if they beat the current record.\n\n";
+
+    cout << "Press Enter to return...\n";
+    waitForEnter();
+
 }
 
 // ==================== MAIN ====================
@@ -546,12 +568,8 @@ int main() {
     SetConsoleCP(CP_UTF8);
 #endif
 
+
     srand((unsigned)time(nullptr));
-
-    if (currentLang == ENGLISH) cout << "\nPress Enter...";
-    else cout << "\nНатиснете Enter...";
-    cin.get();
-
     while (true) {
         clearScreen();
         cout << "=== MIND RIDDLE-HANGMAN ===\n";
@@ -583,14 +601,20 @@ int main() {
             showHighScores();
             break;
         case 4:
- 
+
             clearScreen();
+
+
             cout << "=== SETTINGS ===\n";
-            cout << "1. Toggle show expression (currently " << (SHOW_EXPRESSION ? "ON" : "OFF") << ")\n";
- 
-            cout << "2. Back\n";
+            cout << "1. Change difficulty (currently: "
+                << (DIFFICULTY == 1 ? "Easy" : DIFFICULTY == 2 ? "Medium" : "Hard") << ")\n";
+            cout << "2. Change time to answer (currently: " << TIME_LIMIT << " seconds)\n";
+            cout << "3. Back\n";
+
+
             cout << "Choice: ";
             {
+
                 int sc;
                 if (!(cin >> sc)) {
                     cin.clear();
@@ -598,8 +622,35 @@ int main() {
                     break;
                 }
                 cin.ignore(1000, '\n');
-                if (sc == 1) SHOW_EXPRESSION = !SHOW_EXPRESSION;
-             
+
+                if (sc == 1) {
+                    clearScreen();
+                    cout << "Select difficulty:\n";
+                    cout << "1. Easy\n2. Medium\n3. Hard\nChoice: ";
+                    int diff;
+                    if (!(cin >> diff)) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        break;
+                    }
+                    cin.ignore(1000, '\n');
+                    if (diff >= 1 && diff <= 3) DIFFICULTY = diff;
+                }
+                else if (sc == 2) {
+                    clearScreen();
+                    cout << "Enter new time limit (seconds): ";
+                    int t;
+                    if (!(cin >> t)) {
+                        cin.clear();
+                        cin.ignore(1000, '\n');
+                        break;
+                    }
+                    cin.ignore(1000, '\n');
+                    if (t > 0) TIME_LIMIT = t;
+                }
+                else if (sc == 3) break;
+
+
             }
             break;
         case 5:
