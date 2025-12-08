@@ -6,7 +6,6 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <iomanip>
 #include <chrono>
 #include <thread>
 #include <algorithm>
@@ -19,24 +18,23 @@
 
 using namespace std;
 
-// ==================== SETTINGS ====================
-bool SHOW_EXPRESSION = true;
-int MAX_WRONG = 6;
-int DIFFICULTY = 2;
-string HIGHSCORE_MATH = "scores_math.txt";
-string HIGHSCORE_WORD = "scores_word.txt";
+// global settings
+bool showExpression = true;
+int maxWrong = 6;
+int difficulty = 2;
+int timeLimit = 20;
+int mathCategory = 2;
+int wordCategory = 4;
+string highscoreMath = "scores_math.txt";
+string highscoreWord = "scores_word.txt";
 
-int MATH_CATEGORY = 2;
-int WORD_CATEGORY = 4;
+// colors
+const string reset = "\033[0m";
+const string red = "\033[31m";
+const string green = "\033[32m";
+const string bold = "\033[1m";
 
-// ==================== COLORS ====================
-const string RESET = "\033[0m";
-const string RED = "\033[31m";
-const string GREEN = "\033[32m";
-const string YELLOW = "\033[33m";
-const string BOLD = "\033[1m";
-
-// ==================== UTILITIES ====================
+// functions
 void clearScreen() {
 #if defined(_WIN32)
     system("cls");
@@ -44,7 +42,7 @@ void clearScreen() {
     cout << "\033[2J\033[H";
 #endif
 }
-int TIME_LIMIT = 20;
+
 void sleepSeconds(int sec) {
     this_thread::sleep_for(chrono::seconds(sec));
 }
@@ -117,15 +115,15 @@ void printHangman(int wrong) {
 
 
 
-// ==================== GAME LOGIC ====================
+// math logic
 double generateExpression(string& exprStr) {
     int firstNumber, secondNumber;
 
-    if (DIFFICULTY == 1) {
+    if (difficulty == 1) {
         firstNumber = rand() % 10 + 1;
         secondNumber = rand() % 10 + 1;
     }
-    else if (DIFFICULTY == 2) {
+    else if (difficulty == 2) {
         firstNumber = rand() % 50 + 1;
         secondNumber = rand() % 50 + 1;
     }
@@ -136,10 +134,10 @@ double generateExpression(string& exprStr) {
 
     int operationType = 0;
 
-    if (MATH_CATEGORY == 1) {
+    if (mathCategory == 1) {
         operationType = rand() % 2;
     }
-    else if (MATH_CATEGORY == 2) {
+    else if (mathCategory == 2) {
         operationType = rand() % 4;
     }
     else {
@@ -209,11 +207,11 @@ int calculateScore(bool win, int wrong, int difficulty) {
     if (!win) return 0;
     int base = 50;
     int diffBonus = difficulty * 25;
-    int livesBonus = (MAX_WRONG - wrong) * 5;
+    int livesBonus = (maxWrong - wrong) * 5;
     return base + diffBonus + livesBonus;
 }
 
-// ==================== CATEGORY SELECTION ====================
+// category selection
 void chooseMathCategory() {
     clearScreen();
     cout << "=== MATH CATEGORIES ===\n";
@@ -231,10 +229,10 @@ void chooseMathCategory() {
     cin.ignore();
 
     if (categoryChoice >= 1 && categoryChoice <= 3) {
-        MATH_CATEGORY = categoryChoice;
+        mathCategory = categoryChoice;
     }
     else {
-        MATH_CATEGORY = 2;
+        mathCategory = 2;
     }
 }
 
@@ -256,39 +254,40 @@ void chooseWordCategory() {
     cin.ignore();
 
     if (categoryChoice >= 1 && categoryChoice <= 4) {
-        WORD_CATEGORY = categoryChoice;
+        wordCategory = categoryChoice;
     }
     else {
-        WORD_CATEGORY = 4;
+        wordCategory = 4;
     }
 }
 
 void showHighScores();
 void showRules();
 
+// math hangman
 void playMathHangman() {
     chooseMathCategory();
     clearScreen();
     int wrong = 0;
     int totalScore = 0;
 
-    cout << BOLD << GREEN;
+    cout << bold << green;
     cout << "=== MATHEMATICAL HANGMAN ===\n";
-    cout << RESET;
+    cout << reset;
 
-    while (wrong < MAX_WRONG) {
+    while (wrong < maxWrong) {
         string exprStr;
         double answer = generateExpression(exprStr);
 
-        if (SHOW_EXPRESSION) {
+        if (showExpression) {
             cout << "Expression: " << exprStr << "\n";
         }
 
         bool correct = false;
         const double EPS = 1e-4;
 
-        while (!correct && wrong < MAX_WRONG) {
-            cout << "Remaining attempts: " << (MAX_WRONG - wrong) << "\n";
+        while (!correct && wrong < maxWrong) {
+            cout << "Remaining attempts: " << (maxWrong - wrong) << "\n";
             printHangman(wrong);
 
             cout << "Enter answer (or 'quit' to quit): ";
@@ -299,8 +298,8 @@ void playMathHangman() {
             auto end = chrono::steady_clock::now();
             int elapsed = chrono::duration_cast<chrono::seconds>(end - start).count();
 
-            if (elapsed > TIME_LIMIT) {
-                cout << RED << "Time's up!\n" << RESET;
+            if (elapsed > timeLimit) {
+                cout << red << "Time's up!\n" << reset;
                 wrong++;
                 sleepSeconds(1);
                 clearScreen();
@@ -310,7 +309,7 @@ void playMathHangman() {
             input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 
             if (input.empty()) {
-                cout << RED << "Invalid input!\n" << RESET;
+                cout << red << "Invalid input!\n" << reset;
                 continue;
             }
 
@@ -329,19 +328,19 @@ void playMathHangman() {
             }
 
             if (!parsed) {
-                cout << RED << "Invalid input!\n" << RESET;
+                cout << red << "Invalid input!\n" << reset;
                 continue;
             }
 
             if (fabs(value - answer) < EPS) {
-                totalScore += calculateScore(true, wrong, DIFFICULTY);
-                cout << GREEN << "Correct!\n" << RESET;
+                totalScore += calculateScore(true, wrong, difficulty);
+                cout << green << "Correct!\n" << reset;
                 sleepSeconds(1);
                 clearScreen();
                 correct = true;
             }
             else {
-                cout << RED << "Wrong!\n" << RESET;
+                cout << red << "Wrong!\n" << reset;
                 wrong++;
                 sleepSeconds(1);
                 clearScreen();
@@ -351,10 +350,10 @@ void playMathHangman() {
     }
 
     clearScreen();
-    cout << RED << "=== GAME OVER ===\n" << RESET;
+    cout << red << "=== GAME OVER ===\n" << reset;
     cout << "Your total score: " << totalScore << "\n";
 
-    int best = getBestScore(HIGHSCORE_MATH);
+    int best = getBestScore(highscoreMath);
     if (totalScore > best) {
         cout << "NEW HIGHSCORE!\n";
         string name;
@@ -362,7 +361,7 @@ void playMathHangman() {
             cout << "Enter your name: ";
             getline(cin, name);
         } while (name.empty());
-        saveScoreIfBest(HIGHSCORE_MATH, name, totalScore);
+        saveScoreIfBest(highscoreMath, name, totalScore);
     }
 
     cout << "Press Enter...";
@@ -370,7 +369,7 @@ void playMathHangman() {
 }
 
 
-// ==================== WORD HANGMAN ====================
+// word hangman
 void playWordHangman() {
     chooseWordCategory();
     clearScreen();
@@ -393,9 +392,9 @@ void playWordHangman() {
     "chair","table","clock","puzzle","camera","key","window" };
     vector<string> words;
 
-    if (WORD_CATEGORY == 1) words = animals;
-    else if (WORD_CATEGORY == 2) words = foods;
-    else if (WORD_CATEGORY == 3) words = tech;
+    if (wordCategory == 1) words = animals;
+    else if (wordCategory == 2) words = foods;
+    else if (wordCategory == 3) words = tech;
     else words = random;
 
     string word = words[rand() % words.size()];
@@ -404,13 +403,13 @@ void playWordHangman() {
     bool win = false;
     vector<char> guessed;
 
-    cout << BOLD << GREEN;
+    cout << bold << green;
     cout << "=== WORD HANGMAN ===\n";
-    cout << RESET;
+    cout << reset;
 
-    while (wrong < MAX_WRONG && !win) {
+    while (wrong < maxWrong && !win) {
         cout << "\nCurrent: " << hidden << "\n";
-        cout << "Remaining wrong attempts: " << (MAX_WRONG - wrong) << "\n";
+        cout << "Remaining wrong attempts: " << (maxWrong - wrong) << "\n";
 
         printHangman(wrong);
 
@@ -419,7 +418,7 @@ void playWordHangman() {
         getline(cin, userInput);
 
         if (userInput.empty()) {
-            cout << RED << "Invalid input!\n" << RESET;
+            cout << red << "Invalid input!\n" << reset;
             continue;
         }
 
@@ -430,7 +429,7 @@ void playWordHangman() {
 
 
         if (!isalpha(guessedChar) || userInput.size() != 1) {
-            cout << RED << "Invalid input!\n" << RESET;
+            cout << red << "Invalid input!\n" << reset;
             continue;
         }
 
@@ -448,21 +447,21 @@ void playWordHangman() {
 
         if (!found) {
             wrong++;
-            cout << RED << "Wrong guess!\n" << RESET;
+            cout << red << "Wrong guess!\n" << reset;
         }
 
         if (hidden == word) win = true;
     }
 
-    int score = (win ? (word.size() * 10 + (MAX_WRONG - wrong) * 5) : 0);
+    int score = (win ? (word.size() * 10 + (maxWrong - wrong) * 5) : 0);
     clearScreen();
 
     if (win) {
-        cout << GREEN << "=== YOU WIN! ===\n";
+        cout << green << "=== YOU WIN! ===\n";
         cout << "Word: " << word << "\n";
-        cout << "Score: " << score << RESET << "\n";
+        cout << "Score: " << score << reset << "\n";
 
-        int best = getBestScore(HIGHSCORE_WORD);
+        int best = getBestScore(highscoreWord);
         if (score > best) {
             cout << "NEW HIGHSCORE!\n";
             string name;
@@ -470,20 +469,20 @@ void playWordHangman() {
                 cout << "Enter your name: ";
                 getline(cin, name);
             } while (name.empty());
-            saveScoreIfBest(HIGHSCORE_WORD, name, score);
+            saveScoreIfBest(highscoreWord, name, score);
         }
     }
     else {
-        printHangman(MAX_WRONG);
-        cout << RED << "=== YOU LOSE ===\n";
-        cout << "Word: " << word << RESET << "\n";
+        printHangman(maxWrong);
+        cout << red << "=== YOU LOSE ===\n";
+        cout << "Word: " << word << reset << "\n";
     }
 
     cout << "Press Enter...";
     cin.get();
 }
 
-// ==================== HIGH SCORES ====================
+// high scores
 struct ScoreEntry { string name; int score; };
 
 bool sortScoresDesc(const ScoreEntry& a, const ScoreEntry& b) { return a.score > b.score; }
@@ -493,7 +492,7 @@ void showHighScores() {
 
     cout << "======== HIGH SCORES ========\n\n";
 
-    ifstream fw(HIGHSCORE_WORD);
+    ifstream fw(highscoreWord);
     vector<ScoreEntry> wordScores;
     string playerName; int playerScore;
     while (fw >> playerName >> playerScore) wordScores.push_back({ playerName, playerScore });
@@ -507,7 +506,7 @@ void showHighScores() {
         for (auto& e : wordScores) cout << e.name << " " << e.score << "\n";
     }
 
-    ifstream fm(HIGHSCORE_MATH);
+    ifstream fm(highscoreMath);
     vector<ScoreEntry> mathScores;
     while (fm >> playerName >> playerScore) mathScores.push_back({ playerName, playerScore });
     fm.close();
@@ -527,7 +526,7 @@ void showHighScores() {
     cin.get();
 }
 
-// ==================== RULES ====================
+// rules
 void waitForEnter() {
     string dummy;
     getline(cin, dummy);
@@ -551,7 +550,7 @@ void showRules() {
     cout << "Repeated guesses do not cost attempts.\n\n";
 
     cout << "GENERAL RULES\n";
-    cout << "You have a limited number of wrong attempts: " << MAX_WRONG << "\n";
+    cout << "You have a limited number of wrong attempts: " << maxWrong << "\n";
     cout << "If the hangman drawing is completed, the game is over.\n";
     cout << "Correct answers and fewer mistakes earn more points.\n";
     cout << "High scores are saved only if they beat the current record.\n\n";
@@ -561,14 +560,8 @@ void showRules() {
 
 }
 
-// ==================== MAIN ====================
+// main
 int main() {
-#if defined(_WIN32)
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
-#endif
-
-
     srand((unsigned)time(nullptr));
     while (true) {
         clearScreen();
@@ -607,8 +600,8 @@ int main() {
 
             cout << "=== SETTINGS ===\n";
             cout << "1. Change difficulty (currently: "
-                << (DIFFICULTY == 1 ? "Easy" : DIFFICULTY == 2 ? "Medium" : "Hard") << ")\n";
-            cout << "2. Change time to answer (currently: " << TIME_LIMIT << " seconds)\n";
+                << (difficulty == 1 ? "Easy" : difficulty == 2 ? "Medium" : "Hard") << ")\n";
+            cout << "2. Change time to answer (currently: " << timeLimit << " seconds)\n";
             cout << "3. Back\n";
 
 
@@ -634,7 +627,7 @@ int main() {
                         break;
                     }
                     cin.ignore(1000, '\n');
-                    if (difficulty >= 1 && difficulty <= 3) DIFFICULTY = difficulty;
+                    if (difficulty >= 1 && difficulty <= 3) difficulty = difficulty;
                 }
                 else if (settingsChoice == 2) {
                     clearScreen();
@@ -646,7 +639,7 @@ int main() {
                         break;
                     }
                     cin.ignore(1000, '\n');
-                    if (newTimeLimit > 0) TIME_LIMIT = newTimeLimit;
+                    if (newTimeLimit > 0) timeLimit = newTimeLimit;
                 }
                 else if (settingsChoice == 3) break;
 
