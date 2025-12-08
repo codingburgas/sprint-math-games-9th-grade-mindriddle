@@ -11,7 +11,7 @@ Our project is a game that combines both classic Hangman and Math Hangman. The g
 <a href="https://visualstudio.microsoft.com/"><img src="https://www.svgrepo.com/show/354520/visual-studio.svg" width="40"/></a>
 <a href="https://cplusplus.com/"><img src="https://www.svgrepo.com/show/452183/cpp.svg" width="40"/></a>
 <a href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software"><img src="https://www.svgrepo.com/show/452111/teams.svg" width="40"/></a>
-<a href="https://github.com/"><img src="https://www.svgrepo.com/show/512317/github-142.svg" width="40"/></a>
+<a href="https://github.com/"><img src="https://www.svgrepo.com/show/516640/github.svg" width="40"/></a>
 <a href="https://www.microsoft.com/en-us/microsoft-365/word"><img src="https://www.svgrepo.com/show/374187/word.svg" width="40"/></a>
 <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint"><img src="https://www.svgrepo.com/show/373989/powerpoint.svg" width="40"/></a>
 
