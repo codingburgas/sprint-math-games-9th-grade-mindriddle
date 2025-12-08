@@ -119,80 +119,80 @@ void printHangman(int wrong) {
 
 // ==================== GAME LOGIC ====================
 double generateExpression(string& exprStr) {
-    int a, b;
+    int firstNumber, secondNumber;
 
     if (DIFFICULTY == 1) {
-        a = rand() % 10 + 1;
-        b = rand() % 10 + 1;
+        firstNumber = rand() % 10 + 1;
+        secondNumber = rand() % 10 + 1;
     }
     else if (DIFFICULTY == 2) {
-        a = rand() % 50 + 1;
-        b = rand() % 50 + 1;
+        firstNumber = rand() % 50 + 1;
+        secondNumber = rand() % 50 + 1;
     }
     else {
-        a = rand() % 100 + 1;
-        b = rand() % 100 + 1;
+        firstNumber = rand() % 100 + 1;
+        secondNumber = rand() % 100 + 1;
     }
 
-    int t = 0;
+    int operationType = 0;
 
     if (MATH_CATEGORY == 1) {
-        t = rand() % 2;
+        operationType = rand() % 2;
     }
     else if (MATH_CATEGORY == 2) {
-        t = rand() % 4;
+        operationType = rand() % 4;
     }
     else {
-        t = rand() % 6;
+        operationType = rand() % 6;
     }
 
     double result = 0.0;
-    stringstream ss;
+    stringstream exprStream;
 
-    switch (t) {
+    switch (operationType) {
     case 0:
-        result = a + b;
-        ss << a << " + " << b;
+        result = firstNumber + secondNumber;
+        exprStream << firstNumber << " + " << secondNumber;
         break;
     case 1:
-        result = a - b;
-        ss << a << " - " << b;
+        result = firstNumber - secondNumber;
+        exprStream << firstNumber << " - " << secondNumber;
         break;
     case 2:
-        result = a * b;
-        ss << a << " * " << b;
+        result = firstNumber * secondNumber;
+        exprStream << firstNumber << " * " << secondNumber;
         break;
     case 3:
-        b = (b == 0 ? 1 : b);
-        result = double(a) / b;
-        ss << a << " / " << b;
+        secondNumber = (secondNumber == 0 ? 1 : secondNumber);
+        result = double(firstNumber) / secondNumber;
+        exprStream << firstNumber << " / " << secondNumber;
         break;
     case 4: {
-        int x = rand() % 10 + 1;
-        int e = rand() % 4 + 1;
-        result = pow(x, e);
-        ss << x << " ^ " << e;
+        int baseNumber = rand() % 10 + 1;
+        int exponent = rand() % 4 + 1;
+        result = pow(baseNumber, exponent);
+        exprStream << baseNumber << " ^ " << exponent;
         break;
     }
     case 5: {
-        int r = rand() % 10 + 1;
-        int sq = r * r;
-        result = r;
-        ss << "sqrt(" << sq << ")";
+        int rootNumber = rand() % 10 + 1;
+        int squaredValue = rootNumber * rootNumber;
+        result = rootNumber;
+        exprStream << "sqrt(" << squaredValue << ")";
         break;
     }
     }
 
-    exprStr = ss.str();
+    exprStr = exprStream.str();
     return result;
 }
 
 int getBestScore(const string& filename) {
-    ifstream f(filename);
-    int best = 0, s;
+    ifstream inputFile(filename);
+    int best = 0, score;
     string name;
-    while (f >> name >> s) {
-        if (s > best) best = s;
+    while (inputFile >> name >> score) {
+        if (score > best) best = score;
     }
     return best;
 }
@@ -200,8 +200,8 @@ int getBestScore(const string& filename) {
 void saveScoreIfBest(const string& filename, const string& name, int score) {
     int best = getBestScore(filename);
     if (score > best) {
-        ofstream f(filename, ios::app);
-        f << name << " " << score << "\n";
+        ofstream outputFile(filename, ios::app);
+        outputFile << name << " " << score << "\n";
     }
 }
 
@@ -222,16 +222,16 @@ void chooseMathCategory() {
     cout << "3. Hard (+ - * / ^ sqrt)\n";
     cout << "Choose: ";
 
-    int c;
-    if (!(cin >> c)) {
+    int categoryChoice;
+    if (!(cin >> categoryChoice)) {
         cin.clear();
         cin.ignore(1000, '\n');
-        c = 2;
+        categoryChoice = 2;
     }
     cin.ignore();
 
-    if (c >= 1 && c <= 3) {
-        MATH_CATEGORY = c;
+    if (categoryChoice >= 1 && categoryChoice <= 3) {
+        MATH_CATEGORY = categoryChoice;
     }
     else {
         MATH_CATEGORY = 2;
@@ -247,16 +247,16 @@ void chooseWordCategory() {
     cout << "4. Random\n";
     cout << "Choose: ";
 
-    int c;
-    if (!(cin >> c)) {
+    int categoryChoice;
+    if (!(cin >> categoryChoice)) {
         cin.clear();
         cin.ignore(1000, '\n');
-        c = 4;
+        categoryChoice = 4;
     }
     cin.ignore();
 
-    if (c >= 1 && c <= 4) {
-        WORD_CATEGORY = c;
+    if (categoryChoice >= 1 && categoryChoice <= 4) {
+        WORD_CATEGORY = categoryChoice;
     }
     else {
         WORD_CATEGORY = 4;
@@ -415,33 +415,33 @@ void playWordHangman() {
         printHangman(wrong);
 
         cout << "Enter a letter (or 'quit' to quit): ";
-        string in;
-        getline(cin, in);
+        string userInput;
+        getline(cin, userInput);
 
-        if (in.empty()) {
+        if (userInput.empty()) {
             cout << RED << "Invalid input!\n" << RESET;
             continue;
         }
 
-        if (in == "quit" || in == "QUIT" || in == "Quit") return;
+        if (userInput == "quit" || userInput == "QUIT" || userInput == "Quit") return;
 
-        char c = tolower(in[0]);
+        char guessedChar = tolower(userInput[0]);
 
 
 
-        if (!isalpha(c) || in.size() != 1) {
+        if (!isalpha(guessedChar) || userInput.size() != 1) {
             cout << RED << "Invalid input!\n" << RESET;
             continue;
         }
 
-        if (find(guessed.begin(), guessed.end(), c) != guessed.end()) continue;
+        if (find(guessed.begin(), guessed.end(), guessedChar) != guessed.end()) continue;
 
-        guessed.push_back(c);
+        guessed.push_back(guessedChar);
 
         bool found = false;
         for (int i = 0; i < (int)word.size(); i++) {
-            if (word[i] == c) {
-                hidden[i] = c;
+            if (word[i] == guessedChar) {
+                hidden[i] = guessedChar;
                 found = true;
             }
         }
@@ -495,8 +495,8 @@ void showHighScores() {
 
     ifstream fw(HIGHSCORE_WORD);
     vector<ScoreEntry> wordScores;
-    string n; int s;
-    while (fw >> n >> s) wordScores.push_back({ n, s });
+    string playerName; int playerScore;
+    while (fw >> playerName >> playerScore) wordScores.push_back({ playerName, playerScore });
     fw.close();
 
     if (!wordScores.empty()) {
@@ -509,7 +509,7 @@ void showHighScores() {
 
     ifstream fm(HIGHSCORE_MATH);
     vector<ScoreEntry> mathScores;
-    while (fm >> n >> s) mathScores.push_back({ n, s });
+    while (fm >> playerName >> playerScore) mathScores.push_back({ playerName, playerScore });
     fm.close();
 
     if (!mathScores.empty()) {
@@ -572,7 +572,7 @@ int main() {
     srand((unsigned)time(nullptr));
     while (true) {
         clearScreen();
-        cout << "=== MIND RIDDLE-HANGMAN ===\n";
+        cout << "=== MIND RIDDLE - HANGMAN ===\n";
         cout << "1. Math Hangman\n";
         cout << "2. Word Hangman\n";
         cout << "3. High Scores\n";
@@ -615,40 +615,40 @@ int main() {
             cout << "Choice: ";
             {
 
-                int sc;
-                if (!(cin >> sc)) {
+                int settingsChoice;
+                if (!(cin >> settingsChoice)) {
                     cin.clear();
                     cin.ignore(1000, '\n');
                     break;
                 }
                 cin.ignore(1000, '\n');
 
-                if (sc == 1) {
+                if (settingsChoice == 1) {
                     clearScreen();
                     cout << "Select difficulty:\n";
                     cout << "1. Easy\n2. Medium\n3. Hard\nChoice: ";
-                    int diff;
-                    if (!(cin >> diff)) {
+                    int difficulty;
+                    if (!(cin >> difficulty)) {
                         cin.clear();
                         cin.ignore(1000, '\n');
                         break;
                     }
                     cin.ignore(1000, '\n');
-                    if (diff >= 1 && diff <= 3) DIFFICULTY = diff;
+                    if (difficulty >= 1 && difficulty <= 3) DIFFICULTY = difficulty;
                 }
-                else if (sc == 2) {
+                else if (settingsChoice == 2) {
                     clearScreen();
                     cout << "Enter new time limit (seconds): ";
-                    int t;
-                    if (!(cin >> t)) {
+                    int newTimeLimit;
+                    if (!(cin >> newTimeLimit)) {
                         cin.clear();
                         cin.ignore(1000, '\n');
                         break;
                     }
                     cin.ignore(1000, '\n');
-                    if (t > 0) TIME_LIMIT = t;
+                    if (newTimeLimit > 0) TIME_LIMIT = newTimeLimit;
                 }
-                else if (sc == 3) break;
+                else if (settingsChoice == 3) break;
 
 
             }
@@ -668,4 +668,3 @@ int main() {
 
     return 0;
 }
-
